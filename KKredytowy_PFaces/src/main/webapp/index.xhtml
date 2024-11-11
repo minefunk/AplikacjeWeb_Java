@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<title>Kalkulator Kredytowy</title>
+</h:head>
+<h:body>
+	<p:panel header="Kalkulator Kredytowy">
+
+		<h:form id="bla">
+			
+			<h5>Wysokość Kredytu</h5>
+    		<span class="ui-float-label">
+       		<p:inputText id="wys" value="#{calcBB.wysokoscKredytu}" required="true" requiredMessage="Podaj poprawną wysokość kredytu"/>
+       		<p:outputLabel for="wys" value="Wysokość Kredytu"/>
+   			</span>
+			
+			<h5>Oprocentowanie</h5>
+			<span class="ui-float-label">
+       		<p:inputText id="op" value="#{calcBB.oprocentowanie}"  required="true" requiredMessage="Podaj poprawne oprocentowanie"/>
+       		<p:outputLabel for="op" value="Oprocentowanie"/>
+   			</span>
+   			
+   			<h5>Długość Kredytu (lata)</h5>
+   			<span class="ui-float-label">
+       		<p:inputText id="lata" value="#{calcBB.lata}" />
+       		<p:outputLabel for="lata" value="Długość Kredytu (lata)" required="true" requiredMessage="Podaj poprawną długość kredytu" />
+   			</span>
+   			
+   			
+			 <p:divider />
+				
+				<p:commandButton value="Oblicz Miesięczną Ratę (AJAX)"
+   				 action="#{calcBB.calc_AJAX()}" update="msg"
+    				styleClass="rounded-button" style="margin-right: 30px;" />
+
+				<p:commandButton value="Oblicz Miesięczną Ratę"
+   					 action="#{calcBB.calc()}" update="@form" styleClass="rounded-button" />
+			
+			<p:messages id="msg" />
+			
+		</h:form>
+	</p:panel>
+</h:body>
+</html>
