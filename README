@@ -1,1 +1,9 @@
-KKredytowy - lekacja 1
+KKredytowy - kalkulator kredytowy
+
+KKredytowy_PFaces - dodanie do kaulatora kredytwego PrimeFaces
+
+KKredytowy_Walidacja - dodanie do kaulatora kredytwego walidacje
+
+KKredytowy_Szablony - dodanie do kaulatora kredytwego szablonów
+
+jpa_temp - konfiguracja mariadb, połaczenie z Eclips(screenshot zamieszczony w folderze)
