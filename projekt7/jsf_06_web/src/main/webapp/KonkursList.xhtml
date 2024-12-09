@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<h:head>
+    <meta charset="utf-8"/>
+    <title>List</title>
+</h:head>
+<h:body style="background-color: #eee; margin: 0.5em;">
+
+    <h2>List</h2>
+
+    <p:messages/>
+
+    <h:form id="form-table" style="margin-bottom:1em;">
+        <p:dataTable value="#{konkursListBB.list}" var="k" style="width:100%">
+
+            <p:column>
+                <f:facet name="header">
+                    <h:outputText value="Nazwa"/>
+                </f:facet>
+                <h:outputText value="#{k.nazwa}"/>
+            </p:column>
+
+            <p:column>
+                <f:facet name="header">
+                    <h:outputText value="Data Rozpoczęcia"/>
+                </f:facet>
+                <h:outputText value="#{k.dataRozpoczecia}">
+                    <f:convertDateTime pattern="dd-MM-yyyy"/>
+                </h:outputText>
+            </p:column>
+
+            <p:column>
+                <f:facet name="header">
+                    <h:outputText value="Data Zakończenia"/>
+                </f:facet>
+                <h:outputText value="#{k.dataZakonczenia}">
+                    <f:convertDateTime pattern="dd-MM-yyyy"/>
+                </h:outputText>
+            </p:column>
+
+        </p:dataTable>
+    </h:form>
+
+</h:body>
+</html>
