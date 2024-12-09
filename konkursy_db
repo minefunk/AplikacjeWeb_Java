@@ -1,0 +1,136 @@
+create table konkurs_db.konkursy
+(
+	konkurs_id int auto_increment
+		primary key,
+	nazwa varchar(100) not null,
+	opis tinytext null,
+	data_rozpoczecia date null,
+	data_zakonczenia date null,
+	utworzony_przez int not null
+);
+
+create index idx_utworzony_przez
+	on konkurs_db.konkursy (utworzony_przez);
+
+create table konkurs_db.oceny
+(
+	ocena_id int auto_increment
+		primary key,
+	uczestnik_id int not null,
+	wartosc_oceny int not null,
+	oceniony_przez int not null
+);
+
+create index idx_oceniony_przez
+	on konkurs_db.oceny (oceniony_przez);
+
+create index uczestnik_id
+	on konkurs_db.oceny (uczestnik_id);
+
+create table konkurs_db.role
+(
+	rola_id int auto_increment
+		primary key,
+	nazwa varchar(50) not null
+);
+
+alter table konkurs_db.role
+	add constraint nazwa
+		unique (nazwa);
+
+create table konkurs_db.uczestnicy
+(
+	uczestnik_id int auto_increment
+		primary key,
+	konkurs_id int not null,
+	imie varchar(50) not null,
+	nazwisko varchar(50) not null,
+	email varchar(100) not null,
+	opis tinytext null,
+	utworzony_przez int not null
+);
+
+alter table konkurs_db.oceny
+	add constraint oceny_ibfk_1
+		foreign key (uczestnik_id) references konkurs_db.uczestnicy (uczestnik_id);
+
+create index idx_konkurs_id
+	on konkurs_db.uczestnicy (konkurs_id);
+
+create index utworzony_przez
+	on konkurs_db.uczestnicy (utworzony_przez);
+
+alter table konkurs_db.uczestnicy
+	add constraint uczestnicy_ibfk_1
+		foreign key (konkurs_id) references konkurs_db.konkursy (konkurs_id);
+
+create table konkurs_db.uprawnienia_moderatora
+(
+	uprawnienie_id int auto_increment
+		primary key,
+	admin_id int not null,
+	moderator_id int not null,
+	data_nadania timestamp default current_timestamp() not null
+);
+
+create index admin_id
+	on konkurs_db.uprawnienia_moderatora (admin_id);
+
+create index moderator_id
+	on konkurs_db.uprawnienia_moderatora (moderator_id);
+
+create table konkurs_db.uzytkownicy
+(
+	uzytkownik_id int auto_increment
+		primary key,
+	imie varchar(50) not null,
+	nazwisko varchar(50) not null,
+	email varchar(100) not null,
+	haslo varchar(255) not null,
+	data_utworzenia timestamp default current_timestamp() not null
+);
+
+alter table konkurs_db.konkursy
+	add constraint konkursy_ibfk_1
+		foreign key (utworzony_przez) references konkurs_db.uzytkownicy (uzytkownik_id);
+
+alter table konkurs_db.oceny
+	add constraint oceny_ibfk_2
+		foreign key (oceniony_przez) references konkurs_db.uzytkownicy (uzytkownik_id);
+
+alter table konkurs_db.uczestnicy
+	add constraint uczestnicy_ibfk_2
+		foreign key (utworzony_przez) references konkurs_db.uzytkownicy (uzytkownik_id);
+
+alter table konkurs_db.uprawnienia_moderatora
+	add constraint uprawnienia_moderatora_ibfk_1
+		foreign key (admin_id) references konkurs_db.uzytkownicy (uzytkownik_id);
+
+alter table konkurs_db.uprawnienia_moderatora
+	add constraint uprawnienia_moderatora_ibfk_2
+		foreign key (moderator_id) references konkurs_db.uzytkownicy (uzytkownik_id);
+
+alter table konkurs_db.uzytkownicy
+	add constraint email
+		unique (email);
+
+create table konkurs_db.uzytkownicyrole
+(
+	uzytkownik_id int not null,
+	rola_id int not null
+);
+
+create index rola_id
+	on konkurs_db.uzytkownicyrole (rola_id);
+
+alter table konkurs_db.uzytkownicyrole
+	add primary key (uzytkownik_id, rola_id);
+
+alter table konkurs_db.uzytkownicyrole
+	add constraint uzytkownicyrole_ibfk_1
+		foreign key (uzytkownik_id) references konkurs_db.uzytkownicy (uzytkownik_id);
+
+alter table konkurs_db.uzytkownicyrole
+	add constraint uzytkownicyrole_ibfk_2
+		foreign key (rola_id) references konkurs_db.role (rola_id);
+
